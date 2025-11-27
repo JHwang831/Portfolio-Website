@@ -5,8 +5,8 @@ import { useTheme } from '../context/ThemeContext';
 const content = {
   EN: {
     title: 'About Me',
-    bio: "I'm a Computer Science graduate from Queen Mary University of London with a focus on front-end development, computer graphics, and UI/UX design. I enjoy building software that combines technical functionality with thoughtful design.",
-    bio2: "Currently serving as Social Service Personnel in South Korea until August 2026.",
+    bio: "I'm a Computer Science graduate from Queen Mary University of London who approaches every situation with sincerity and an open mind. My greatest strength lies in quickly understanding and adapting to changing environments. I have a strong sense of responsibility and always strive to complete tasks to the best of my ability.",
+    bio2: "I value trust in relationships and believe in communication based on mutual respect and active listening. With an endless passion for learning, I view challenges as opportunities for growth. Currently serving as Social Service Personnel in South Korea until August 2026.",
     location: 'Daegu, South Korea',
     education: {
       title: 'Education',
@@ -18,10 +18,16 @@ const content = {
           grade: 'Upper Second-class Honours (2:1)'
         },
         {
-          degree: 'High School Diploma, Engineering',
-          school: 'Daegun High School',
+          degree: 'UK Foundation Course',
+          school: "King's Seoul Foundation",
+          period: '2020 - 2021',
+          grade: 'Overall Score 78%'
+        },
+        {
+          degree: 'High School Diploma',
+          school: 'Daegun High School (Autonomous Private)',
           period: '2017 - 2020',
-          grade: 'Web Development, Robotics, English Discussion Society'
+          grade: 'Engineering Track'
         }
       ]
     },
@@ -45,12 +51,29 @@ const content = {
           org: 'OKSE', 
           period: '2021.09 - 2023.06',
           description: 'Created and designed media and promotional materials for various events.'
+        },
+        { 
+          role: 'Server', 
+          org: 'Masigo (Korean Restaurant)', 
+          period: '2024.06 - 2024.07',
+          description: 'Provided customer service as a hall server in London.'
+        },
+        { 
+          role: 'Server', 
+          org: 'JH Holdings - Yori (Korean Restaurant)', 
+          period: '2022.12 - 2023.02',
+          description: 'Provided customer service as a hall server in London.'
         }
       ]
     },
     certifications: {
-      title: 'Certifications',
+      title: 'Certifications & Awards',
       items: [
+        {
+          name: 'IELTS Academic (Overall 7.0)',
+          issuer: 'British Council, IDP Education',
+          year: '2020'
+        },
         {
           name: 'National High School Software Competition - Encouragement Award',
           issuer: 'KAIST',
@@ -73,8 +96,8 @@ const content = {
   },
   KR: {
     title: '소개',
-    bio: "Queen Mary University of London에서 컴퓨터과학을 전공하고 프론트엔드 개발, 컴퓨터 그래픽스, UI/UX 디자인에 집중하고 있습니다. 기술적 기능과 디자인을 결합한 소프트웨어를 만드는 것을 좋아합니다.",
-    bio2: "현재 2026년 8월까지 사회복무요원으로 복무 중입니다.",
+    bio: "저는 다양한 상황 속에서 언제나 성실함과 열린 마음으로 임하는 사람입니다. 가장 큰 장점은 상황을 빠르게 파악하고 적응하는 능력이며, 작은 일에도 최선을 다하는 책임감과 끈기를 가지고 있습니다.",
+    bio2: "신뢰를 바탕으로 한 소통을 중시하며, 배움에 대한 끊임없는 열정으로 성장해 나가고 있습니다. 현재 2026년 8월까지 사회복무요원으로 복무 중입니다.",
     location: '대구광역시, 대한민국',
     education: {
       title: '학력',
@@ -86,10 +109,16 @@ const content = {
           grade: 'Upper Second (2:1) 졸업'
         },
         {
+          degree: 'UK Foundation Course',
+          school: "King's Seoul Foundation",
+          period: '2020 - 2021',
+          grade: 'Overall Score 78%'
+        },
+        {
           degree: '공학계열 고등학교 졸업',
-          school: '대건고등학교',
+          school: '대건고등학교 (자율형 사립)',
           period: '2017 - 2020',
-          grade: '웹개발동아리, 로봇공학동아리, 영어토론동아리'
+          grade: '공학계열'
         }
       ]
     },
@@ -113,12 +142,29 @@ const content = {
           org: 'OKSE', 
           period: '2021.09 - 2023.06',
           description: '다양한 이벤트의 미디어 및 홍보자료 제작.'
+        },
+        { 
+          role: '홀 서버', 
+          org: 'Masigo (런던 한식당)', 
+          period: '2024.06 - 2024.07',
+          description: '런던 내 한식당에서 고객 서비스 제공.'
+        },
+        { 
+          role: '홀 서버', 
+          org: 'JH Holdings - Yori (런던 한식당)', 
+          period: '2022.12 - 2023.02',
+          description: '런던 내 한식당에서 고객 서비스 제공.'
         }
       ]
     },
     certifications: {
-      title: '수상',
+      title: '자격 및 수상',
       items: [
+        {
+          name: 'IELTS Academic (Overall 7.0)',
+          issuer: 'British Council, IDP Education',
+          year: '2020'
+        },
         {
           name: '전국 고등학생 소프트웨어 경진대회 장려상',
           issuer: 'KAIST',

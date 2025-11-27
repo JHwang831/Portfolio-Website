@@ -5,13 +5,13 @@ const content = {
   EN: {
     name: 'Junhyeok Hwang',
     subtitle: 'Developer & Designer',
-    description: 'CS graduate from QMUL. Building things with code and design.',
+    description: 'Adaptable problem-solver with a passion for learning and building meaningful solutions.',
     status: 'Social Service Personnel (ROK)',
   },
   KR: {
     name: '황준혁',
     subtitle: '개발자 & 디자이너',
-    description: 'QMUL 컴퓨터과학 졸업. 코드와 디자인으로 무언가를 만듭니다.',
+    description: '성실함과 열린 마음으로 끊임없이 배우고 성장하는 개발자입니다.',
     status: '사회복무요원',
   }
 };
