@@ -15,7 +15,14 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [isRotating, setIsRotating] = useState(false);
   const location = useLocation();
+
+  const handleThemeToggle = () => {
+    setIsRotating(true);
+    toggleDarkMode();
+    setTimeout(() => setIsRotating(false), 600);
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -73,7 +80,7 @@ const Navbar = () => {
           {/* Right Side */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button
-              onClick={toggleDarkMode}
+              onClick={handleThemeToggle}
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
               className="theme-toggle-btn"
@@ -87,7 +94,9 @@ const Navbar = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'relative',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                transform: isRotating ? 'rotate(360deg)' : 'rotate(0deg)',
+                transition: 'transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)'
               }}
               aria-label="Toggle dark mode"
             >
@@ -171,12 +180,8 @@ const Navbar = () => {
       )}
 
       <style>{`
-        .theme-toggle-btn {
-          transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-        
-        .theme-toggle-btn:active {
-          transform: rotate(360deg);
+        .theme-toggle-btn:hover {
+          transform: scale(1.1);
         }
 
         @media (max-width: 768px) {
