@@ -1,6 +1,107 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MapPin, GraduationCap, Briefcase, Code, Award } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+
+const getSpeedByLength = (text) => {
+  if (!text) return 30;
+  const length = text.length;
+  if (length < 5) return 60;
+  if (length < 15) return 40;
+  if (length < 30) return 25;
+  if (length < 60) return 15;
+  return 8;
+};
+
+const MorphText = ({ text = '' }) => {
+  const { language } = useTheme();
+  const [displayedText, setDisplayedText] = useState(text);
+  const [morphIndex, setMorphIndex] = useState(0);
+  const [isMorphing, setIsMorphing] = useState(false);
+  const prevTextRef = useRef(text);
+  const prevLanguageRef = useRef(language);
+
+  useEffect(() => {
+    if (prevLanguageRef.current !== language) {
+      setIsMorphing(true);
+      setMorphIndex(0);
+      prevLanguageRef.current = language;
+    } else {
+      setDisplayedText(text);
+      prevTextRef.current = text;
+    }
+  }, [language, text]);
+
+  useEffect(() => {
+    if (!isMorphing || !text) return;
+
+    const oldText = prevTextRef.current;
+    const newText = text;
+    const maxLength = Math.max(oldText.length, newText.length);
+    const speed = getSpeedByLength(newText);
+
+    if (morphIndex <= maxLength) {
+      const timeout = setTimeout(() => {
+        const morphed = newText.slice(0, morphIndex) + oldText.slice(morphIndex);
+        setDisplayedText(morphed);
+        setMorphIndex(prev => prev + 1);
+      }, speed);
+
+      return () => clearTimeout(timeout);
+    } else {
+      setIsMorphing(false);
+      setDisplayedText(newText);
+      prevTextRef.current = newText;
+    }
+  }, [isMorphing, morphIndex, text]);
+
+  return <>{displayedText}</>;
+};
+
+// Section 컴포넌트를 외부로 분리!
+const Section = ({ icon: Icon, title, children, theme }) => {
+  const c = theme;
+  return (
+    <section style={{
+      backgroundColor: c.bgSecondary,
+      border: `1px solid ${c.border}`,
+      borderRadius: '8px',
+      padding: '24px',
+      marginBottom: '16px'
+    }}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        marginBottom: '16px',
+        paddingBottom: '8px',
+        borderBottom: `1px solid ${c.border}`
+      }}>
+        <Icon size={20} style={{ color: c.accent }} />
+        <h2 style={{ fontSize: '18px', fontWeight: 600, color: c.textPrimary, margin: 0 }}>
+          <MorphText text={title} />
+        </h2>
+      </div>
+      {children}
+    </section>
+  );
+};
+
+// Tag 컴포넌트도 외부로 분리
+const Tag = ({ children, theme }) => {
+  const c = theme;
+  return (
+    <span style={{
+      padding: '4px 12px',
+      fontSize: '14px',
+      backgroundColor: c.bg,
+      border: `1px solid ${c.border}`,
+      borderRadius: '16px',
+      color: c.text
+    }}>
+      <MorphText text={children} />
+    </span>
+  );
+};
 
 const content = {
   EN: {
@@ -190,58 +291,26 @@ const content = {
 const About = () => {
   const { language, theme } = useTheme();
   const c = theme;
-  const t = content[language];
-
-  const Section = ({ icon: Icon, title, children }) => (
-    <section style={{
-      backgroundColor: c.bgSecondary,
-      border: `1px solid ${c.border}`,
-      borderRadius: '8px',
-      padding: '24px',
-      marginBottom: '16px'
-    }}>
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px',
-        marginBottom: '16px',
-        paddingBottom: '8px',
-        borderBottom: `1px solid ${c.border}`
-      }}>
-        <Icon size={20} style={{ color: c.accent }} />
-        <h2 style={{ fontSize: '18px', fontWeight: 600, color: c.textPrimary, margin: 0 }}>{title}</h2>
-      </div>
-      {children}
-    </section>
-  );
-
-  const Tag = ({ children }) => (
-    <span style={{
-      padding: '4px 12px',
-      fontSize: '14px',
-      backgroundColor: c.bg,
-      border: `1px solid ${c.border}`,
-      borderRadius: '16px',
-      color: c.text
-    }}>
-      {children}
-    </span>
-  );
+  const t = content[language] || content.EN;
 
   return (
     <div style={{ maxWidth: '768px', margin: '0 auto', padding: '32px 24px' }}>
       <h1 style={{ fontSize: '32px', fontWeight: 700, color: c.textPrimary, marginBottom: '24px' }}>
-        {t.title}
+        <MorphText text={t.title} />
       </h1>
 
       {/* Bio */}
-      <Section icon={MapPin} title={t.location}>
-        <p style={{ fontSize: '16px', lineHeight: 1.7, color: c.text, margin: '0 0 12px 0' }}>{t.bio}</p>
-        <p style={{ fontSize: '16px', lineHeight: 1.7, color: c.text, margin: 0 }}>{t.bio2}</p>
+      <Section icon={MapPin} title={t.location} theme={theme}>
+        <p style={{ fontSize: '16px', lineHeight: 1.7, color: c.text, margin: '0 0 12px 0' }}>
+          <MorphText text={t.bio} />
+        </p>
+        <p style={{ fontSize: '16px', lineHeight: 1.7, color: c.text, margin: 0 }}>
+          <MorphText text={t.bio2} />
+        </p>
       </Section>
 
       {/* Education */}
-      <Section icon={GraduationCap} title={t.education.title}>
+      <Section icon={GraduationCap} title={t.education.title} theme={theme}>
         {t.education.items.map((item, i) => (
           <div key={i} style={{ 
             display: 'flex', 
@@ -253,17 +322,25 @@ const About = () => {
             borderBottom: i < t.education.items.length - 1 ? `1px solid ${c.border}` : 'none'
           }}>
             <div>
-              <p style={{ fontSize: '16px', fontWeight: 600, color: c.textPrimary, margin: '0 0 4px 0' }}>{item.degree}</p>
-              <p style={{ fontSize: '14px', color: c.text, margin: '0 0 4px 0' }}>{item.school}</p>
-              <p style={{ fontSize: '14px', color: c.accent, margin: 0 }}>{item.grade}</p>
+              <p style={{ fontSize: '16px', fontWeight: 600, color: c.textPrimary, margin: '0 0 4px 0' }}>
+                <MorphText text={item.degree} />
+              </p>
+              <p style={{ fontSize: '14px', color: c.text, margin: '0 0 4px 0' }}>
+                <MorphText text={item.school} />
+              </p>
+              <p style={{ fontSize: '14px', color: c.accent, margin: 0 }}>
+                <MorphText text={item.grade} />
+              </p>
             </div>
-            <span style={{ fontSize: '14px', color: c.textMuted }}>{item.period}</span>
+            <span style={{ fontSize: '14px', color: c.textMuted }}>
+              <MorphText text={item.period} />
+            </span>
           </div>
         ))}
       </Section>
 
       {/* Experience */}
-      <Section icon={Briefcase} title={t.experience.title}>
+      <Section icon={Briefcase} title={t.experience.title} theme={theme}>
         {t.experience.items.map((item, i) => (
           <div key={i} style={{ 
             paddingBottom: i < t.experience.items.length - 1 ? '16px' : 0,
@@ -272,49 +349,73 @@ const About = () => {
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px', marginBottom: '8px' }}>
               <div>
-                <p style={{ fontSize: '16px', fontWeight: 600, color: c.textPrimary, margin: '0 0 4px 0' }}>{item.role}</p>
-                <p style={{ fontSize: '14px', color: c.accent, margin: 0 }}>{item.org}</p>
+                <p style={{ fontSize: '16px', fontWeight: 600, color: c.textPrimary, margin: '0 0 4px 0' }}>
+                  <MorphText text={item.role} />
+                </p>
+                <p style={{ fontSize: '14px', color: c.accent, margin: 0 }}>
+                  <MorphText text={item.org} />
+                </p>
               </div>
-              <span style={{ fontSize: '14px', color: c.textMuted }}>{item.period}</span>
+              <span style={{ fontSize: '14px', color: c.textMuted }}>
+                <MorphText text={item.period} />
+              </span>
             </div>
-            <p style={{ fontSize: '14px', color: c.text, margin: 0, lineHeight: 1.6 }}>{item.description}</p>
+            <p style={{ fontSize: '14px', color: c.text, margin: 0, lineHeight: 1.6 }}>
+              <MorphText text={item.description} />
+            </p>
           </div>
         ))}
       </Section>
 
       {/* Certifications */}
-      <Section icon={Award} title={t.certifications.title}>
+      <Section icon={Award} title={t.certifications.title} theme={theme}>
         {t.certifications.items.map((item, i) => (
-          <div key={i} style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+          <div key={i} style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            flexWrap: 'wrap', 
+            gap: '8px',
+            paddingBottom: i < t.certifications.items.length - 1 ? '16px' : 0,
+            marginBottom: i < t.certifications.items.length - 1 ? '16px' : 0,
+            borderBottom: i < t.certifications.items.length - 1 ? `1px solid ${c.border}` : 'none'
+          }}>
             <div>
-              <p style={{ fontSize: '16px', fontWeight: 600, color: c.textPrimary, margin: '0 0 4px 0' }}>{item.name}</p>
-              <p style={{ fontSize: '14px', color: c.accent, margin: 0 }}>{item.issuer}</p>
+              <p style={{ fontSize: '16px', fontWeight: 600, color: c.textPrimary, margin: '0 0 4px 0' }}>
+                <MorphText text={item.name} />
+              </p>
+              <p style={{ fontSize: '14px', color: c.accent, margin: 0 }}>
+                <MorphText text={item.issuer} />
+              </p>
             </div>
-            <span style={{ fontSize: '14px', color: c.textMuted }}>{item.year}</span>
+            <span style={{ fontSize: '14px', color: c.textMuted }}>
+              <MorphText text={item.year} />
+            </span>
           </div>
         ))}
       </Section>
 
       {/* Skills */}
-      <Section icon={Code} title={t.skills.title}>
+      <Section icon={Code} title={t.skills.title} theme={theme}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-          {t.skills.items.map((skill, i) => <Tag key={i}>{skill}</Tag>)}
+          {t.skills.items.map((skill, i) => <Tag key={i} theme={theme}>{skill}</Tag>)}
         </div>
       </Section>
 
       {/* Languages */}
-      <Section icon={GraduationCap} title={t.languages.title}>
+      <Section icon={GraduationCap} title={t.languages.title} theme={theme}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
           {t.languages.items.map((lang, i) => (
             <div key={i} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-              <span style={{ fontSize: '14px', fontWeight: 600, color: c.textPrimary }}>{lang.name}</span>
-              <span style={{ fontSize: '12px', color: c.textMuted }}>({lang.level})</span>
+              <span style={{ fontSize: '14px', fontWeight: 600, color: c.textPrimary }}>
+                <MorphText text={lang.name} />
+              </span>
+              <span style={{ fontSize: '12px', color: c.textMuted }}>
+                (<MorphText text={lang.level} />)
+              </span>
             </div>
           ))}
         </div>
       </Section>
-
-
     </div>
   );
 };

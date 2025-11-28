@@ -1,12 +1,68 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ExternalLink, Github } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+
+const getSpeedByLength = (text) => {
+  if (!text) return 30;
+  const length = text.length;
+  if (length < 5) return 60;
+  if (length < 15) return 40;
+  if (length < 30) return 25;
+  if (length < 60) return 15;
+  return 8;
+};
+
+const MorphText = ({ text = '' }) => {
+  const { language } = useTheme();
+  const [displayedText, setDisplayedText] = useState(text);
+  const [morphIndex, setMorphIndex] = useState(0);
+  const [isMorphing, setIsMorphing] = useState(false);
+  const prevTextRef = useRef(text);
+  const prevLanguageRef = useRef(language);
+
+  useEffect(() => {
+    if (prevLanguageRef.current !== language) {
+      setIsMorphing(true);
+      setMorphIndex(0);
+      prevLanguageRef.current = language;
+    } else {
+      setDisplayedText(text);
+      prevTextRef.current = text;
+    }
+  }, [language, text]);
+
+  useEffect(() => {
+    if (!isMorphing || !text) return;
+
+    const oldText = prevTextRef.current;
+    const newText = text;
+    const maxLength = Math.max(oldText.length, newText.length);
+    const speed = getSpeedByLength(newText);
+
+    if (morphIndex <= maxLength) {
+      const timeout = setTimeout(() => {
+        const morphed = newText.slice(0, morphIndex) + oldText.slice(morphIndex);
+        setDisplayedText(morphed);
+        setMorphIndex(prev => prev + 1);
+      }, speed);
+
+      return () => clearTimeout(timeout);
+    } else {
+      setIsMorphing(false);
+      setDisplayedText(newText);
+      prevTextRef.current = newText;
+    }
+  }, [isMorphing, morphIndex, text]);
+
+  return <>{displayedText}</>;
+};
 
 const content = {
   EN: {
     title: 'Portfolio',
     subtitle: 'Projects I\'ve worked on',
-    categories: ['All', 'Development', 'Design'],
+    code: 'Code',
+    live: 'Live',
     projects: [
       {
         title: 'Blitz City Dash',
@@ -48,7 +104,8 @@ const content = {
   KR: {
     title: '포트폴리오',
     subtitle: '작업한 프로젝트들',
-    categories: ['전체', '개발', '디자인'],
+    code: '코드',
+    live: '라이브',
     projects: [
       {
         title: 'Blitz City Dash',
@@ -92,18 +149,17 @@ const content = {
 const Portfolio = () => {
   const { language, theme } = useTheme();
   const c = theme;
-  const t = content[language];
+  const t = content[language] || content.EN;
 
   return (
     <div style={{ maxWidth: '1024px', margin: '0 auto', padding: '32px 24px' }}>
       <h1 style={{ fontSize: '32px', fontWeight: 700, color: c.textPrimary, marginBottom: '8px' }}>
-        {t.title}
+        <MorphText text={t.title} />
       </h1>
       <p style={{ fontSize: '16px', color: c.textMuted, marginBottom: '32px' }}>
-        {t.subtitle}
+        <MorphText text={t.subtitle} />
       </p>
 
-      {/* Projects Grid */}
       <div style={{ 
         display: 'grid', 
         gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', 
@@ -121,17 +177,15 @@ const Portfolio = () => {
               flexDirection: 'column'
             }}
           >
-            {/* Title */}
             <h3 style={{ 
               fontSize: '18px', 
               fontWeight: 600, 
               color: c.textPrimary, 
               margin: '0 0 8px 0' 
             }}>
-              {project.title}
+              <MorphText text={project.title} />
             </h3>
 
-            {/* Description */}
             <p style={{ 
               fontSize: '14px', 
               color: c.text, 
@@ -139,10 +193,9 @@ const Portfolio = () => {
               margin: '0 0 16px 0',
               flex: 1
             }}>
-              {project.description}
+              <MorphText text={project.description} />
             </p>
 
-            {/* Tech Stack */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '16px' }}>
               {project.tech.map((tech, j) => (
                 <span
@@ -156,12 +209,11 @@ const Portfolio = () => {
                     color: c.textMuted
                   }}
                 >
-                  {tech}
+                  <MorphText text={tech} />
                 </span>
               ))}
             </div>
 
-            {/* Links */}
             <div style={{ display: 'flex', gap: '12px' }}>
               {project.github && (
                 <a
@@ -178,7 +230,7 @@ const Portfolio = () => {
                   }}
                 >
                   <Github size={16} />
-                  Code
+                  <MorphText text={t.code} />
                 </a>
               )}
               {project.live && (
@@ -196,7 +248,7 @@ const Portfolio = () => {
                   }}
                 >
                   <ExternalLink size={16} />
-                  Live
+                  <MorphText text={t.live} />
                 </a>
               )}
             </div>

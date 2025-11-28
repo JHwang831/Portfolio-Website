@@ -1,21 +1,67 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FileText } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+
+const getSpeedByLength = (text) => {
+  if (!text) return 30;
+  const length = text.length;
+  if (length < 5) return 60;
+  if (length < 15) return 40;
+  if (length < 30) return 25;
+  return 15;
+};
+
+const MorphText = ({ text = '' }) => {
+  const { language } = useTheme();
+  const [displayedText, setDisplayedText] = useState(text);
+  const [morphIndex, setMorphIndex] = useState(0);
+  const [isMorphing, setIsMorphing] = useState(false);
+  const prevTextRef = useRef(text);
+  const prevLanguageRef = useRef(language);
+
+  useEffect(() => {
+    if (prevLanguageRef.current !== language) {
+      setIsMorphing(true);
+      setMorphIndex(0);
+      prevLanguageRef.current = language;
+    } else {
+      setDisplayedText(text);
+      prevTextRef.current = text;
+    }
+  }, [language, text]);
+
+  useEffect(() => {
+    if (!isMorphing || !text) return;
+
+    const oldText = prevTextRef.current;
+    const newText = text;
+    const maxLength = Math.max(oldText.length, newText.length);
+    const speed = getSpeedByLength(newText);
+
+    if (morphIndex <= maxLength) {
+      const timeout = setTimeout(() => {
+        const morphed = newText.slice(0, morphIndex) + oldText.slice(morphIndex);
+        setDisplayedText(morphed);
+        setMorphIndex(prev => prev + 1);
+      }, speed);
+
+      return () => clearTimeout(timeout);
+    } else {
+      setIsMorphing(false);
+      setDisplayedText(newText);
+      prevTextRef.current = newText;
+    }
+  }, [isMorphing, morphIndex, text]);
+
+  return <>{displayedText}</>;
+};
 
 const content = {
   EN: {
     title: 'Blog',
     subtitle: 'Thoughts, tutorials, and dev logs',
     empty: 'No posts yet. Coming soon!',
-    posts: [
-      // Placeholder posts - will be replaced with real posts later
-      // {
-      //   title: 'Building my portfolio website',
-      //   date: '2024-12-01',
-      //   description: 'A walkthrough of how I built this portfolio using React.',
-      //   tags: ['React', 'Web Development']
-      // }
-    ]
+    posts: []
   },
   KR: {
     title: '블로그',
@@ -28,19 +74,18 @@ const content = {
 const Blog = () => {
   const { language, theme } = useTheme();
   const c = theme;
-  const t = content[language];
+  const t = content[language] || content.EN;
 
   return (
     <div style={{ maxWidth: '768px', margin: '0 auto', padding: '32px 24px' }}>
       <h1 style={{ fontSize: '32px', fontWeight: 700, color: c.textPrimary, marginBottom: '8px' }}>
-        {t.title}
+        <MorphText text={t.title} />
       </h1>
       <p style={{ fontSize: '16px', color: c.textMuted, marginBottom: '32px' }}>
-        {t.subtitle}
+        <MorphText text={t.subtitle} />
       </p>
 
       {t.posts.length === 0 ? (
-        // Empty State
         <div style={{
           backgroundColor: c.bgSecondary,
           border: `1px solid ${c.border}`,
@@ -50,11 +95,10 @@ const Blog = () => {
         }}>
           <FileText size={48} style={{ color: c.textMuted, marginBottom: '16px' }} />
           <p style={{ fontSize: '16px', color: c.textMuted, margin: 0 }}>
-            {t.empty}
+            <MorphText text={t.empty} />
           </p>
         </div>
       ) : (
-        // Posts List
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {t.posts.map((post, i) => (
             <article
@@ -67,17 +111,19 @@ const Blog = () => {
                 cursor: 'pointer'
               }}
             >
-              <span style={{ fontSize: '14px', color: c.textMuted }}>{post.date}</span>
+              <span style={{ fontSize: '14px', color: c.textMuted }}>
+                <MorphText text={post.date} />
+              </span>
               <h2 style={{ 
                 fontSize: '20px', 
                 fontWeight: 600, 
                 color: c.textPrimary, 
                 margin: '8px 0' 
               }}>
-                {post.title}
+                <MorphText text={post.title} />
               </h2>
               <p style={{ fontSize: '14px', color: c.text, margin: '0 0 12px 0', lineHeight: 1.6 }}>
-                {post.description}
+                <MorphText text={post.description} />
               </p>
               <div style={{ display: 'flex', gap: '8px' }}>
                 {post.tags?.map((tag, j) => (
@@ -92,7 +138,7 @@ const Blog = () => {
                       color: c.accent
                     }}
                   >
-                    {tag}
+                    <MorphText text={tag} />
                   </span>
                 ))}
               </div>

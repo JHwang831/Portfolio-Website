@@ -1,5 +1,68 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../context/ThemeContext';
+
+// 텍스트 길이에 따른 변환 속도 조절
+const getSpeedByLength = (text) => {
+  if (!text) return 30;
+  const length = text.length;
+  if (length < 5) return 60;    // 매우 짧은 텍스트: 천천히
+  if (length < 15) return 40;   // 짧은 텍스트: 보통
+  if (length < 30) return 25;   // 중간 텍스트: 빠르게
+  if (length < 60) return 15;   // 긴 텍스트: 매우 빠르게
+  return 8;                     // 매우 긴 텍스트: 초고속
+};
+
+// 실시간 텍스트 변환 효과
+const MorphText = ({ text = '' }) => {
+  const { language } = useTheme();
+  const [displayedText, setDisplayedText] = useState(text);
+  const [morphIndex, setMorphIndex] = useState(0);
+  const [isMorphing, setIsMorphing] = useState(false);
+  const prevTextRef = useRef(text);
+  const prevLanguageRef = useRef(language);
+
+  // 언어 변경 감지
+  useEffect(() => {
+    if (prevLanguageRef.current !== language) {
+      console.log('🔄 Start morphing:', prevTextRef.current, '→', text);
+      setIsMorphing(true);
+      setMorphIndex(0);
+      prevLanguageRef.current = language;
+    } else {
+      setDisplayedText(text);
+      prevTextRef.current = text;
+    }
+  }, [language, text]);
+
+  // 변환 애니메이션
+  useEffect(() => {
+    if (!isMorphing || !text) return;
+
+    const oldText = prevTextRef.current;
+    const newText = text;
+    const maxLength = Math.max(oldText.length, newText.length);
+    const speed = getSpeedByLength(newText); // 속도 자동 조절!
+
+    if (morphIndex <= maxLength) {
+      const timeout = setTimeout(() => {
+        // 앞부분은 새 텍스트, 뒷부분은 이전 텍스트
+        const morphed = newText.slice(0, morphIndex) + oldText.slice(morphIndex);
+        setDisplayedText(morphed);
+        setMorphIndex(prev => prev + 1);
+      }, speed);
+
+      return () => clearTimeout(timeout);
+    } else {
+      // 완료
+      setIsMorphing(false);
+      setDisplayedText(newText);
+      prevTextRef.current = newText;
+      console.log('✅ Morph complete:', newText, `(${speed}ms/step)`);
+    }
+  }, [isMorphing, morphIndex, text]);
+
+  return <>{displayedText}</>;
+};
 
 const content = {
   EN: {
@@ -16,50 +79,19 @@ const content = {
   }
 };
 
-const TypewriterText = ({ text, speed = 25 }) => {
-  const [displayedText, setDisplayedText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    setDisplayedText('');
-    setCurrentIndex(0);
-  }, [text]);
-
-  useEffect(() => {
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayedText(prev => prev + text[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
-      }, speed);
-      return () => clearTimeout(timeout);
-    }
-  }, [currentIndex, text, speed]);
-
-  return (
-    <>
-      {displayedText}
-      {currentIndex < text.length && (
-        <span style={{ 
-          animation: 'blink 1s step-end infinite',
-          marginLeft: '2px'
-        }}>|</span>
-      )}
-    </>
-  );
-};
-
 const Home = () => {
   const { language, theme } = useTheme();
   const c = theme;
-  const t = content[language];
+  const t = content[language] || content.EN;
 
   return (
     <section style={{
-      minHeight: 'calc(100vh - 64px)',
+      minHeight: '70vh',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '0 16px'
+      padding: '0 16px',
+      paddingTop: '64px'
     }}>
       <div style={{ maxWidth: '512px', textAlign: 'center' }}>
         {/* Status Badge */}
@@ -72,7 +104,7 @@ const Home = () => {
           border: `1px solid ${c.border}`,
           borderRadius: '9999px',
           fontSize: '14px',
-          marginBottom: '32px'
+          marginBottom: '24px'
         }}>
           <span style={{
             width: '8px',
@@ -82,7 +114,7 @@ const Home = () => {
             animation: 'pulse 2s infinite'
           }} />
           <span style={{ color: c.textMuted }}>
-            <TypewriterText text={t.status} speed={30} />
+            <MorphText text={t.status} />
           </span>
         </div>
 
@@ -91,11 +123,11 @@ const Home = () => {
           fontSize: 'clamp(2.5rem, 8vw, 3.75rem)',
           fontWeight: 700,
           color: c.textPrimary,
-          marginBottom: '16px',
+          marginBottom: '12px',
           letterSpacing: '-0.02em',
           lineHeight: 1.1
         }}>
-          <TypewriterText text={t.name} speed={35} />
+          <MorphText text={t.name} />
         </h1>
 
         {/* Subtitle */}
@@ -103,9 +135,9 @@ const Home = () => {
           fontSize: 'clamp(1.25rem, 4vw, 1.5rem)',
           fontWeight: 500,
           color: c.accent,
-          marginBottom: '24px'
+          marginBottom: '20px'
         }}>
-          <TypewriterText text={t.subtitle} speed={30} />
+          <MorphText text={t.subtitle} />
         </p>
 
         {/* Description */}
@@ -117,7 +149,7 @@ const Home = () => {
           margin: '0 auto',
           minHeight: '50px'
         }}>
-          <TypewriterText text={t.description} speed={20} />
+          <MorphText text={t.description} />
         </p>
       </div>
 
@@ -125,10 +157,6 @@ const Home = () => {
         @keyframes pulse {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.5; }
-        }
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
         }
       `}</style>
     </section>

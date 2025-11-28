@@ -45,7 +45,7 @@ const Footer = () => {
           ))}
         </div>
         <p style={{ fontSize: '14px', color: c.textMuted, margin: 0 }}>
-          © 2024 Junhyeok Hwang
+          © 2025 Junhyeok Hwang
         </p>
       </div>
     </footer>
