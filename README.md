@@ -257,8 +257,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### ⭐ Star this repo if you found it helpful!
 
-Made with ❤️ by Junhyeok Hwang
+Made by Junhyeok Hwang
 
-© 2024 Junhyeok Hwang. All Rights Reserved.
+© 2025 Junhyeok Hwang. All Rights Reserved.
 
 </div>
