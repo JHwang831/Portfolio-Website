@@ -68,13 +68,13 @@ const content = {
   EN: {
     name: 'Junhyeok Hwang',
     subtitle: 'Developer & Designer',
-    description: 'Adaptable problem-solver with a passion for learning and building meaningful solutions.',
+    description: 'Specialising in regex-based text processing and web automation.',
     status: 'Social Service Personnel (ROK)',
   },
   KR: {
     name: '황준혁',
     subtitle: '개발자 & 디자이너',
-    description: '성실함과 열린 마음으로 끊임없이 배우고 성장하는 개발자입니다.',
+    description: '정규표현식 기반 텍스트 처리와 웹 자동화를 전문으로 합니다.',
     status: '사회복무요원',
   }
 };

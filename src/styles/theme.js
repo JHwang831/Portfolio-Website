@@ -6,7 +6,8 @@ export const colors = {
     textPrimary: '#1f2328',
     textMuted: '#656d76',
     border: '#d0d7de',
-    accent: '#0969da',
+    accent: '#f97316',        // 🔥 오렌지 (로고와 일치!)
+    accentHover: '#ea580c',   // 진한 오렌지 (호버용)
   },
   dark: {
     bg: '#0d1117',
@@ -15,7 +16,8 @@ export const colors = {
     textPrimary: '#f0f6fc',
     textMuted: '#8b949e',
     border: '#30363d',
-    accent: '#58a6ff',
+    accent: '#667eea',        // 🔮 블루 (로고와 일치!)
+    accentHover: '#5a67d8',   // 진한 블루 (호버용)
   }
 };
 
