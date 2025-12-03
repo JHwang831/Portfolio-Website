@@ -9,27 +9,17 @@ import Blog from './pages/Blog';
 
 const PageTransition = ({ children }) => {
   const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   return (
     <div
       key={location.pathname}
       style={{
-        animation: 'fadeSlideIn 0.5s ease-out'
+        backgroundColor: isHomePage ? 'transparent' : undefined,
+        background: isHomePage ? 'transparent' : undefined
       }}
     >
       {children}
-      <style>{`
-        @keyframes fadeSlideIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 };

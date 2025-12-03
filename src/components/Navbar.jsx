@@ -334,6 +334,32 @@ const Navbar = () => {
 
   const c = theme;
   const items = navItems[language] || navItems.EN;
+  
+  // HOME 페이지인지 체크
+  const isHomePage = location.pathname === '/';
+
+  // Navbar 스타일 결정
+  const getNavbarStyle = () => {
+    if (isHomePage) {
+      // HOME 페이지: 완전 투명! (모든 스타일 명시)
+      return {
+        backgroundColor: 'transparent',
+        background: 'transparent',
+        backdropFilter: 'none',
+        WebkitBackdropFilter: 'none',
+        borderBottom: 'none',
+        border: 'none',
+        boxShadow: 'none'
+      };
+    } else {
+      // 다른 페이지: 기존 스크롤 감지 로직
+      return {
+        backgroundColor: scrolled ? (darkMode ? 'rgba(13,17,23,0.95)' : 'rgba(255,255,255,0.95)') : 'transparent',
+        backdropFilter: scrolled ? 'blur(8px)' : 'none',
+        borderBottom: scrolled ? `1px solid ${c.border}` : 'none'
+      };
+    }
+  };
 
   return (
     <>
@@ -343,13 +369,22 @@ const Navbar = () => {
         left: 0,
         right: 0,
         zIndex: 50,
-        backgroundColor: scrolled ? (darkMode ? 'rgba(13,17,23,0.95)' : 'rgba(255,255,255,0.95)') : 'transparent',
-        backdropFilter: scrolled ? 'blur(8px)' : 'none',
-        borderBottom: scrolled ? `1px solid ${c.border}` : 'none',
-        transition: 'all 0.3s'
+        transition: 'all 0.3s',
+        ...getNavbarStyle()
       }}>
-        <div style={{ maxWidth: '1024px', margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '64px' }}>
+        <div style={{ 
+          maxWidth: '1024px', 
+          margin: '0 auto', 
+          padding: '0 24px',
+          backgroundColor: isHomePage ? 'transparent' : undefined
+        }}>
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'space-between', 
+            height: isHomePage ? '56px' : '64px',
+            backgroundColor: isHomePage ? 'transparent' : undefined
+          }}>
             <a 
               href="#"
               onClick={handleLogoClick}
@@ -364,10 +399,13 @@ const Navbar = () => {
                   : 'linear-gradient(135deg, #f97316 0%, #eab308 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                transition: 'opacity 0.3s ease',
+                transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
                 cursor: 'pointer',
                 opacity: fontLoaded ? 1 : 0,
-                visibility: fontLoaded ? 'visible' : 'hidden'
+                visibility: fontLoaded ? 'visible' : 'hidden',
+                filter: isHomePage 
+                  ? 'brightness(1.5) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6)) drop-shadow(0 4px 16px rgba(0, 0, 0, 0.4))'
+                  : 'none'
               }}
             >
               @jhwang
@@ -383,13 +421,19 @@ const Navbar = () => {
                   style={{
                     padding: '8px 12px',
                     fontSize: '14px',
-                    fontWeight: 500,
-                    color: location.pathname === navPaths[i] ? c.accent : c.textMuted,
+                    fontWeight: 600,
+                    color: isHomePage 
+                      ? '#ffffff'
+                      : (location.pathname === navPaths[i] ? c.accent : c.textMuted),
                     textDecoration: 'none',
                     borderRadius: '6px',
                     position: 'relative',
-                    transition: 'all 0.3s ease',
-                    transform: clickedNav === i ? 'scale(0.95)' : 'scale(1)'
+                    transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                    transform: clickedNav === i ? 'scale(0.95)' : 'scale(1)',
+                    filter: isHomePage 
+                      ? 'brightness(1.5) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6)) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.4))'
+                      : 'none',
+                    textShadow: isHomePage ? '0 2px 8px rgba(0, 0, 0, 0.5)' : 'none'
                   }}
                 >
                   <MorphText text={item} />
@@ -415,7 +459,10 @@ const Navbar = () => {
                   position: 'relative',
                   overflow: 'hidden',
                   transform: isRotating ? 'rotate(360deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+                  transition: 'transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), filter 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                  filter: isHomePage 
+                    ? 'brightness(1.5) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6)) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.4))'
+                    : 'none'
                 }}
                 aria-label="Toggle dark mode"
               >
@@ -423,9 +470,11 @@ const Navbar = () => {
                   position: 'relative',
                   width: '20px',
                   height: '20px',
-                  color: isHovering 
-                    ? (darkMode ? '#fbbf24' : '#6366f1') 
-                    : c.textMuted,
+                  color: isHomePage
+                    ? '#ffffff'
+                    : (isHovering 
+                        ? (darkMode ? '#fbbf24' : '#6366f1') 
+                        : c.textMuted),
                   transition: 'color 0.3s ease'
                 }}>
                   {darkMode ? <Sun size={20} /> : <Moon size={20} />}
@@ -438,14 +487,18 @@ const Navbar = () => {
                 style={{
                   padding: '6px 10px',
                   fontSize: '14px',
-                  fontWeight: 500,
+                  fontWeight: 600,
                   fontFamily: 'monospace',
-                  border: `1px solid ${c.border}`,
+                  border: isHomePage ? 'none' : `1px solid ${c.border}`,
                   borderRadius: '6px',
                   backgroundColor: 'transparent',
-                  color: c.textMuted,
+                  color: isHomePage ? '#ffffff' : c.textMuted,
                   cursor: 'pointer',
-                  transition: 'all 0.3s ease'
+                  transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                  filter: isHomePage 
+                    ? 'brightness(1.5) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6)) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.4))'
+                    : 'none',
+                  textShadow: isHomePage ? '0 2px 8px rgba(0, 0, 0, 0.5)' : 'none'
                 }}
               >
                 {language}
@@ -504,12 +557,12 @@ const Navbar = () => {
           @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=block');
 
           .logo-link:hover {
-            transform: scale(1.1);
-            filter: brightness(1.1);
+            transform: translateY(-2px) rotate(-2deg);
+            filter: brightness(1.2) drop-shadow(0 0 12px currentColor);
           }
 
           .logo-link {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           }
           
           .nav-item::after {
