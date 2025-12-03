@@ -158,7 +158,7 @@ const Home = () => {
         position: 'relative',
         overflow: 'hidden',
         backgroundColor: 'transparent',
-        transition: 'background-color 0.8s ease'
+        transition: 'background-color 1.2s ease'
       }}
     >
       {/* Interactive Fluid Gradient Background */}

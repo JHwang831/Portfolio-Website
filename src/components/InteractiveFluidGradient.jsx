@@ -13,10 +13,7 @@ const InteractiveFluidGradient = () => {
   // HOME 페이지일 때만 visible
   useEffect(() => {
     if (isHomePage) {
-      const timer = setTimeout(() => {
-        setIsVisible(true);
-      }, 300);
-      return () => clearTimeout(timer);
+      setIsVisible(true);
     } else {
       setIsVisible(false);
     }
@@ -59,8 +56,8 @@ const InteractiveFluidGradient = () => {
   // Color system based on theme
   const colors = isDarkMode
     ? {
-        bg1: 'rgb(8, 10, 15)',
-        bg2: 'rgb(0, 17, 32)',
+        bg1: 'rgb(13, 17, 23)',      // Layout과 동일!
+        bg2: 'rgb(13, 17, 23)',      // Layout과 동일!
         color1: '18, 113, 255',      // Blue
         color2: '221, 74, 255',       // Purple
         color3: '100, 220, 255',      // Cyan
@@ -71,8 +68,8 @@ const InteractiveFluidGradient = () => {
         interactive: '140, 100, 255', // Purple
       }
     : {
-        bg1: 'rgb(255, 250, 240)',
-        bg2: 'rgb(255, 245, 230)',
+        bg1: 'rgb(255, 255, 255)',   // Layout과 동일!
+        bg2: 'rgb(255, 255, 255)',   // Layout과 동일!
         color1: '249, 115, 22',       // Orange
         color2: '251, 146, 60',       // Light Orange
         color3: '59, 130, 246',       // Blue
@@ -95,8 +92,8 @@ const InteractiveFluidGradient = () => {
         pointerEvents: 'none',
         zIndex: 0,
         opacity: isVisible ? 1 : 0,
-        transition: 'opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1)',
-        background: `linear-gradient(40deg, ${colors.bg1}, ${colors.bg2})`,
+        transition: 'opacity 1.2s ease, background-color 1.2s ease',
+        backgroundColor: isDarkMode ? '#0d1117' : '#ffffff',
       }}
     >
       {/* SVG Filters */}
@@ -162,6 +159,7 @@ const InteractiveFluidGradient = () => {
             transformOrigin: 'center center',
             animation: isVisible ? 'moveVertical 30s ease infinite' : 'none',
             opacity: 1,
+            transition: 'background 1.2s ease',
           }}
         />
 
@@ -178,6 +176,7 @@ const InteractiveFluidGradient = () => {
             transformOrigin: 'calc(50% - 400px)',
             animation: isVisible ? 'moveInCircle 20s reverse infinite' : 'none',
             opacity: 1,
+            transition: 'background 1.2s ease',
           }}
         />
 
@@ -194,6 +193,7 @@ const InteractiveFluidGradient = () => {
             transformOrigin: 'calc(50% + 400px)',
             animation: isVisible ? 'moveInCircle 40s linear infinite' : 'none',
             opacity: 1,
+            transition: 'background 1.2s ease',
           }}
         />
 
@@ -210,6 +210,7 @@ const InteractiveFluidGradient = () => {
             transformOrigin: 'calc(50% - 200px)',
             animation: isVisible ? 'moveHorizontal 40s ease infinite' : 'none',
             opacity: 0.7,
+            transition: 'background 1.2s ease',
           }}
         />
 
@@ -226,6 +227,7 @@ const InteractiveFluidGradient = () => {
             transformOrigin: 'calc(50% - 800px) calc(50% + 200px)',
             animation: isVisible ? 'moveInCircle 20s ease infinite' : 'none',
             opacity: 1,
+            transition: 'background 1.2s ease',
           }}
         />
 
@@ -242,6 +244,7 @@ const InteractiveFluidGradient = () => {
             transformOrigin: 'calc(50% + 300px) calc(50% - 300px)',
             animation: isVisible ? 'moveInCircle 35s ease infinite' : 'none',
             opacity: 0.8,
+            transition: 'background 1.2s ease',
           }}
         />
 
@@ -258,6 +261,7 @@ const InteractiveFluidGradient = () => {
             transformOrigin: 'center center',
             animation: isVisible ? 'moveVertical 50s ease infinite' : 'none',
             opacity: 0.6,
+            transition: 'background 1.2s ease',
           }}
         />
 
@@ -273,6 +277,7 @@ const InteractiveFluidGradient = () => {
             top: '-50%',
             left: '-50%',
             opacity: 0.7,
+            transition: 'background 1.2s ease',
           }}
         />
       </div>
