@@ -65,6 +65,22 @@ const MorphText = ({ text = '' }) => {
 const projectsData = {
   EN: [
     {
+      id: 'portfolio',
+      title: 'Personal Website',
+      category: 'Development',
+      brief: 'Interactive portfolio website with React & Tailwind CSS',
+      description: 'Modern portfolio website featuring bilingual support (EN/KR), morphing text animations, dark/light theme toggle, interactive mesh gradient backgrounds, and a Markdown-based blog system. Built with React and deployed on Vercel with auto-deployment via GitHub.',
+      tech: ['React', 'Tailwind CSS', 'JavaScript', 'Vercel'],
+      period: '2025.11 - Present',
+      team: 'Solo',
+      role: 'Full-Stack Developer + Designer',
+      status: 'In Progress',
+      github: 'https://github.com/JHwang831/portfolio-website',
+      live: 'https://portfolio-website-lac-alpha-19.vercel.app/',
+      image: '/projects/personalwebsite.png',
+      featured: true
+    },
+    {
       id: 'futgg',
       title: 'FUT.gg Translation Tool',
       category: 'Development',
@@ -78,6 +94,21 @@ const projectsData = {
       github: 'https://github.com/JHwang831/FUT.GG-Custom-Translation-Korean-',
       image: '/projects/futgg.png',
       featured: true
+    },
+    {
+      id: 'okse',
+      title: 'OKSE Event Posters',
+      category: 'Design',
+      brief: 'Event promotional materials for OKSE (2021-2024)',
+      description: 'Designed promotional posters for OKSE (Organisation of Korean Students in England) events including Freshers Fair, Networking Events, and Social Gatherings. Created 7 posters and 1 teaser video.',
+      tech: ['Adobe Photoshop', 'Graphic Design', 'Video Editing'],
+      period: '2021.09 - 2024.04',
+      team: 'Solo',
+      role: 'Graphic Designer',
+      status: 'Completed',
+      gallery: true,
+      image: '/projects/oksepreview.png',
+      featured: false
     },
     {
       id: 'baseball',
@@ -94,21 +125,6 @@ const projectsData = {
       live: 'https://baseball-english.netlify.app/',
       image: '/projects/baseballenglish.png', 
       featured: true
-    },
-    {
-      id: 'okse',
-      title: 'OKSE Event Posters',
-      category: 'Design',
-      brief: 'Event promotional materials for OKSE (2021-2024)',
-      description: 'Designed promotional posters for OKSE (Organisation of Korean Students in England) events including Freshers Fair, Networking Events, and Social Gatherings. Created 7 posters and 1 teaser video.',
-      tech: ['Adobe Photoshop', 'Graphic Design', 'Video Editing'],
-      period: '2021.09 - 2024.04',
-      team: 'Solo',
-      role: 'Graphic Designer',
-      status: 'Completed',
-      gallery: true, // OKSE 갤러리 열기
-      image: '/projects/oksepreview.png',
-      featured: false
     },
     {
       id: 'poker',
@@ -143,6 +159,22 @@ const projectsData = {
   ],
   KR: [
     {
+      id: 'portfolio',
+      title: '개인 웹사이트 개발',
+      category: '개발',
+      brief: 'React & Tailwind CSS 기반 인터랙티브 포트폴리오 웹사이트',
+      description: '이중 언어 지원(EN/KR), 모핑 텍스트 애니메이션, 다크/라이트 테마 토글, 인터랙티브 메시 그라데이션 배경, 마크다운 기반 블로그 시스템을 갖춘 현대적인 포트폴리오 웹사이트. React로 개발하고 GitHub 자동 배포를 통해 Vercel에 배포.',
+      tech: ['React', 'Tailwind CSS', 'JavaScript', 'Vercel'],
+      period: '2025.11 - 현재',
+      team: '개인',
+      role: '풀스택 개발자 + 디자이너',
+      status: '진행 중',
+      github: 'https://github.com/JHwang831/portfolio-website',
+      live: 'https://portfolio-website-lac-alpha-19.vercel.app/',
+      image: '/projects/personalwebsite.png',
+      featured: true
+    },
+    {
       id: 'futgg',
       title: 'FUT.gg 번역 도구',
       category: '개발',
@@ -155,22 +187,6 @@ const projectsData = {
       status: '진행 중 (FC26 최적화)',
       github: 'https://github.com/JHwang831/FUT.GG-Custom-Translation-Korean-',
       image: '/projects/futgg.png',
-      featured: true
-    },
-    {
-      id: 'baseball',
-      title: 'Baseball English',
-      category: '개발',
-      brief: '한국 야구선수를 위한 36주 영어 학습 플랫폼',
-      description: '미국 대학 야구팀 준비하는 한국 선수들을 위한 영어 학습 플랫폼. 야구 용어 중심의 36주 커리큘럼, 반응형 디자인, 다크모드 지원.',
-      tech: ['React', 'Tailwind CSS', 'JavaScript'],
-      period: '2025.10 - 현재',
-      team: '개인',
-      role: '풀스택 개발자 + 디자이너',
-      status: '진행 중',
-      github: 'https://github.com/JHwang831/baseball-english',
-      live: 'https://baseball-english.netlify.app/',
-      image: '/projects/baseballenglish.png', 
       featured: true
     },
     {
@@ -187,6 +203,22 @@ const projectsData = {
       gallery: true,
       image: '/projects/oksepreview.png',
       featured: false
+    },
+    {
+      id: 'baseball',
+      title: 'Baseball English',
+      category: '개발',
+      brief: '한국 야구선수를 위한 36주 영어 학습 플랫폼',
+      description: '미국 대학 야구팀 준비하는 한국 선수들을 위한 영어 학습 플랫폼. 야구 용어 중심의 36주 커리큘럼, 반응형 디자인, 다크모드 지원.',
+      tech: ['React', 'Tailwind CSS', 'JavaScript'],
+      period: '2025.10 - 현재',
+      team: '개인',
+      role: '풀스택 개발자 + 디자이너',
+      status: '진행 중',
+      github: 'https://github.com/JHwang831/baseball-english',
+      live: 'https://baseball-english.netlify.app/',
+      image: '/projects/baseballenglish.png', 
+      featured: true
     },
     {
       id: 'poker',
