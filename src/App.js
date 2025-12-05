@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Portfolio from './pages/Portfolio';
 import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost'; // ← 추가!
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -80,6 +81,7 @@ const AnimatedRoutes = () => {
         <Route path="/about" element={<About />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogPost />} /> {/* ← 추가! */}
       </Routes>
     </div>
   );

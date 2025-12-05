@@ -76,7 +76,7 @@ const okseData = {
       '2022-23': [
         { type: 'image', src: '/projects/2022opening.png', title: '2022 Opening Party' },
         { type: 'image', src: '/projects/2022opening-floorplan.png', title: '2022 Opening Party Floor Plan' },
-        { type: 'image', src: '/projects/2022freshers.png', title: '2022 Freshers Fair' },
+        { type: 'image', src: '/projects/2022freshers.png', title: '2022 Freshers Welcoming Event' },
         { type: 'image', src: '/projects/2022bandday.png', title: '2022 Band Day' },
         { type: 'image', src: '/projects/2023final.png', title: '2023 Final Party Poster' },
         { type: 'image', src: '/projects/2023final-bandonly.png', title: '2023 Final Party Band Only' }
