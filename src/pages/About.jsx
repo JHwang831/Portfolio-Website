@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MapPin, GraduationCap, Briefcase, Code, Award, Globe, Mail, Github, Linkedin, Download, TrendingUp, Zap, Target } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import usePageBackground from '../hooks/usePageBackground';
 
 // MorphText 컴포넌트 (기존 유지)
 const getSpeedByLength = (text) => {
@@ -570,6 +571,8 @@ const content = {
 };
 
 const About = () => {
+  usePageBackground();
+
   const { language, theme } = useTheme();
   const c = theme;
   const t = content[language] || content.EN;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import InteractiveFluidGradient from '../components/InteractiveFluidGradient';
+import usePageBackground from '../hooks/usePageBackground';
 
 // 텍스트 길이에 따른 변환 속도 조절
 const getSpeedByLength = (text) => {
@@ -73,6 +74,8 @@ const content = {
 };
 
 const Home = () => {
+  usePageBackground();
+  
   const { language, theme } = useTheme();
   const c = theme;
   const t = content[language] || content.EN;

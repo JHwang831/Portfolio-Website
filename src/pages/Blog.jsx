@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FileText } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import usePageBackground from '../hooks/usePageBackground';
 
 const getSpeedByLength = (text) => {
   if (!text) return 30;
@@ -72,6 +73,8 @@ const content = {
 };
 
 const Blog = () => {
+  usePageBackground();
+
   const { language, theme } = useTheme();
   const c = theme;
   const t = content[language] || content.EN;
