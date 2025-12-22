@@ -1,264 +1,345 @@
-<div align="center">
+# Portfolio Website
 
-# 🎨 Junhyeok Hwang Portfolio
+A modern, bilingual portfolio website showcasing my projects, experience, and blog posts. Built with React and Tailwind CSS, featuring smooth animations and responsive design.
 
-### Personal Portfolio Website
+🌐 **Live Site**: [https://junhyeok-hwang.vercel.app/](https://junhyeok-hwang.vercel.app/)  
+📌 **Custom Domain** (planned): https://junhyeokhwang.com
 
-[![React](https://img.shields.io/badge/React-18.2-61DAFB?style=flat&logo=react&logoColor=white)](https://reactjs.org/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Deployment](https://img.shields.io/badge/Deploy-Vercel-000000?style=flat&logo=vercel&logoColor=white)](https://vercel.com)
+## ✨ Key Features
 
-[🌐 Live Demo](#) | [📝 About](#about) | [✨ Features](#features) | [🚀 Getting Started](#getting-started)
+### 🎨 MorphText Animation
+**What it does**: Character-by-character morphing text animation on the home page  
+**How to use**: Visit the home page and watch the greeting text animate smoothly  
+**Implementation**: Custom React component using `setInterval` for character-level transitions
 
-</div>
+### 🌍 Bilingual Support (English/Korean)
+**What it does**: Complete website content available in both English and Korean  
+**How to use**: Click the language toggle button (EN/KR) in the top navigation bar  
+**Implementation**: Context-based language switching with centralized content management in `content.js`
 
----
+### 🌓 Dark/Light Mode
+**What it does**: Comprehensive theming system with optimized color schemes for both modes  
+**How to use**: Click the sun/moon icon in the navigation bar to switch themes  
+**Implementation**: 
+- Context-based theme management with `localStorage` persistence
+- Cool tones for dark mode, warm tones for light mode
+- Smooth CSS transitions between theme changes
 
-## 📖 About
+### 📱 Fully Responsive Design
+**What it does**: Optimized layout for all screen sizes (mobile, tablet, desktop)  
+**How to use**: Resize your browser or visit on any device  
+**Implementation**: 
+- Tailwind CSS responsive utilities (`sm:`, `md:`, `lg:`, `xl:`)
+- Mobile-first design approach
+- Adaptive navigation (hamburger menu on mobile)
 
-A modern, responsive portfolio website showcasing my projects, experience, and skills. Built with React and designed with a clean, minimal aesthetic inspired by GitHub and Velog.
+## 🏗️ Project Structure
 
-**Key Highlights:**
-- 🌓 Seamless dark/light mode switching
-- 🌐 Bilingual support (English/Korean)
-- ⌨️ Smooth typewriter animations
-- 📱 Fully responsive design
-- ⚡ Optimized performance
-
----
-
-## ✨ Features
-
-### 🎭 Theme Switching
-- **Dark/Light Mode**: Toggle between themes with animated icon transitions
-- **Colorful Hover Effects**: Sun icon (yellow) in dark mode, Moon icon (purple) in light mode
-- **Smooth Transitions**: 360° rotation animation on theme change
-
-### 🌍 Internationalization
-- **Dual Language Support**: Switch between English and Korean
-- **Typewriter Effect**: Elegant text animation when changing languages
-- **Dynamic Content**: All pages adapt to selected language
-
-### 📱 Responsive Design
-- **Mobile-First Approach**: Optimized for all screen sizes
-- **Adaptive Navigation**: Hamburger menu on mobile devices
-- **Flexible Layouts**: Grid-based project cards that reflow automatically
-
-### 🎯 Clean UI/UX
-- **Minimalist Design**: Focus on content with clean typography
-- **Consistent Styling**: GitHub/Velog-inspired color palette
-- **Intuitive Navigation**: Fixed header with smooth page transitions
-
----
+```
+portfolio-website/
+├── src/
+│   ├── components/
+│   │   ├── Home.jsx           # Landing page with MorphText
+│   │   ├── About.jsx           # About section with timeline
+│   │   ├── Portfolio.jsx       # Projects gallery with Masonry layout
+│   │   ├── Blog.jsx            # Blog posts with Markdown support
+│   │   └── Navbar.jsx          # Navigation with language/theme toggles
+│   ├── data/
+│   │   ├── content.js          # Bilingual content
+│   │   └── projects.js         # Project data
+│   ├── assets/
+│   │   └── blog/               # Markdown blog posts
+│   ├── App.jsx                 # Main app component
+│   └── index.css               # Global styles
+├── public/
+│   └── projects/               # Project screenshots
+└── package.json
+```
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- **React 18** - UI library
-- **React Router v6** - Client-side routing
-- **Lucide React** - Icon library
-- **Inline CSS** - Component-scoped styling
-
-### Development
-- **Create React App** - Project setup and build tool
-- **Git** - Version control
-
-### Deployment
-- **Vercel** - Hosting and continuous deployment
-
----
+- **Framework**: React 18
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **Animations**: Framer Motion
+- **Deployment**: Vercel
+- **Version Control**: Git/GitHub
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-```bash
-node >= 14.0.0
-npm >= 6.0.0
-```
+- Node.js (v16 or higher)
+- npm or yarn
 
 ### Installation
 
+1. Clone the repository
 ```bash
-# Clone the repository
-git clone https://github.com/JHwang831/portfolio.git
+git clone https://github.com/JHwang831/Portfolio-Website.git
+cd Portfolio-Website
+```
 
-# Navigate to project directory
-cd portfolio-project
-
-# Install dependencies
+2. Install dependencies
+```bash
 npm install
-
-# Start development server
-npm start
 ```
 
-The app will open at `http://localhost:3000` 🎉
-
----
-
-## 📂 Project Structure
-
-```
-src/
-├── 📄 App.js                    # Main app component & routing
-├── 📄 index.js                  # Entry point
-│
-├── 📁 context/
-│   └── ThemeContext.jsx         # Global state (theme & language)
-│
-├── 📁 styles/
-│   └── theme.js                 # Color theme definitions
-│
-├── 📁 components/
-│   ├── Navbar.jsx               # Navigation bar with theme toggle
-│   ├── Footer.jsx               # Footer with social links
-│   └── Layout.jsx               # Common layout wrapper
-│
-└── 📁 pages/
-    ├── Home.jsx                 # Landing page with typewriter effect
-    ├── About.jsx                # Education, experience, skills
-    ├── Portfolio.jsx            # Project showcase
-    └── Blog.jsx                 # Blog posts (upcoming)
-```
-
----
-
-## 🎨 Pages Overview
-
-| Page | Description |
-|------|-------------|
-| **Home** | Hero section with name, title, and social links |
-| **About** | Education history, work experience, skills, and languages |
-| **Portfolio** | Project cards with descriptions, tech stack, and links |
-| **Blog** | Blog posts and development logs (coming soon) |
-
----
-
-## 🌐 Deployment
-
-### Deploy to Vercel
-
-#### Option 1: GitHub Integration (Recommended)
-
-1. Push code to GitHub
-2. Visit [vercel.com](https://vercel.com) and sign in
-3. Click **"Import Project"** → Select your repository
-4. Vercel auto-detects React settings → Click **"Deploy"**
-5. Done! 🎉
-
-#### Option 2: Vercel CLI
-
+3. Start the development server
 ```bash
-# Install Vercel CLI
-npm install -g vercel
-
-# Deploy
-vercel
+npm run dev
 ```
 
-### Build for Production
+4. Open [http://localhost:5173](http://localhost:5173) in your browser
+
+### Building for Production
 
 ```bash
 npm run build
 ```
 
-Generates optimized production build in `build/` folder.
+The optimized production build will be in the `dist` folder.
+
+## 📄 Pages & Features
+
+### 🏠 Home
+**Purpose**: Landing page with engaging first impression  
+**Features**:
+- MorphText animation greeting
+- Quick introduction
+- Call-to-action buttons
+
+**Navigation**: Automatically shown when visiting the site
 
 ---
 
-## 🔧 Configuration
+### 👤 About
+**Purpose**: Detailed background and experience information  
+**Features**:
+- **Bento Box Layout**: Organized information cards
+- **Interactive Timeline**: Education and work experience with animations
+- **Scroll Animations**: Elements fade in as you scroll down
 
-### Customize Theme Colors
+**How to explore**:
+1. Click "About" in the navigation bar
+2. Scroll through the timeline to see different experiences
+3. Hover over cards for subtle interactions
 
-Edit `src/styles/theme.js`:
+---
+
+### 💼 Portfolio
+**Purpose**: Showcase of development and design projects  
+**Features**:
+- **Masonry Layout**: Pinterest-style grid arrangement
+- **Category Filtering**: Filter by "All", "Development", or "Design"
+- **Project Modals**: Click any project for detailed information
+- **Tech Stack Badges**: Visual representation of technologies used
+
+**How to use**:
+1. Click "Portfolio" in navigation
+2. Use category buttons to filter projects
+3. Click any project card to open detailed modal
+4. View GitHub links and live demos within modals
+
+---
+
+### 📝 Blog
+**Purpose**: Technical writing and project insights  
+**Features**:
+- **Markdown Support**: Posts written in Markdown format
+- **Category Organization**: Posts organized by topic
+- **Read Time Estimation**: Approximate reading time for each post
+
+**How to use**:
+1. Click "Blog" in navigation
+2. Browse available posts
+3. Click on any post title to read the full article
+
+---
+
+### 🎨 Special Features
+
+**Interactive Mesh Gradient Background**:
+- Mouse-responsive gradient that follows cursor movement
+- Smooth GPU-accelerated animations
+- Different gradients for light/dark mode
+
+**3D Tilt Effects**:
+- Subtle 3D perspective on project cards
+- Activated on mouse hover (desktop only)
+- Smooth transitions for natural feel
+
+**Performance Optimization**:
+- 60fps animation standards maintained throughout
+- Optimized blur effects for better performance
+- Lazy loading for images
+
+## 🌐 Deployment
+
+The website is deployed on Vercel with automatic deployments from the main branch.
+
+**Current URL**: [https://junhyeok-hwang.vercel.app/](https://junhyeok-hwang.vercel.app/)
+
+**Custom Domain** (planned): [https://junhyeokhwang.com](https://junhyeokhwang.com)
+
+## 📝 Adding New Blog Posts
+
+Blog posts are written in Markdown and stored in `src/assets/blog/`.
+
+**Step-by-step guide**:
+
+1. **Create a new Markdown file**
+   ```bash
+   # Navigate to blog folder
+   cd src/assets/blog/
+   
+   # Create new file (use kebab-case naming)
+   touch my-new-post.md
+   ```
+
+2. **Add frontmatter metadata** at the top of the file
+   ```markdown
+   ---
+   title: Your Post Title Here
+   date: 2025-12-22
+   category: Development
+   excerpt: A brief summary of your post (optional)
+   ---
+   ```
+
+3. **Write your content** in Markdown
+   ```markdown
+   ## Introduction
+   
+   Your content here...
+   
+   ### Code Examples
+   
+   ```javascript
+   const example = "code";
+   ```
+   
+   ### Images
+   
+   ![Alt text](image-path.png)
+   ```
+
+4. **Save and commit**
+   ```bash
+   git add src/assets/blog/my-new-post.md
+   git commit -m "Add new blog post: Your Title"
+   git push
+   ```
+
+5. **The post will automatically appear** in the blog section after deployment
+
+**Supported Markdown features**:
+- Headers (H1-H6)
+- Bold, italic, strikethrough
+- Code blocks with syntax highlighting
+- Lists (ordered and unordered)
+- Links and images
+- Blockquotes
+- Tables
+
+## 🔧 Customization Guide
+
+### Updating Content
+
+**Bilingual Content**:
+1. Open `src/data/content.js`
+2. Modify the `EN` and `KR` objects
+3. Both languages share the same structure for easy maintenance
 
 ```javascript
-export const colors = {
-  light: {
-    bg: '#ffffff',
-    text: '#57606a',
-    accent: '#0969da',
-    // ...
+export const content = {
+  EN: {
+    nav: ['Home', 'About', 'Portfolio', 'Blog'],
+    home: {
+      greeting: "Hi, I'm",
+      name: "Your Name",
+      // ... more content
+    }
   },
-  dark: {
-    bg: '#0d1117',
-    text: '#c9d1d9',
-    accent: '#58a6ff',
-    // ...
+  KR: {
+    nav: ['홈', '소개', '포트폴리오', '블로그'],
+    // ... Korean translations
   }
 };
 ```
 
-### Adjust Typewriter Speed
+**Project Information**:
+1. Open `src/data/projects.js`
+2. Add or modify project entries
+3. Each project includes:
+   - Title (EN/KR)
+   - Description
+   - Tech stack
+   - Links (GitHub, live demo)
+   - Category
 
-Edit `src/pages/Home.jsx`:
+---
+
+### Changing Theme Colors
+
+**Quick color changes**:
+1. Open `tailwind.config.js`
+2. Modify the `extend.colors` section
 
 ```javascript
-<TypewriterText text={t.name} speed={35} /> // Adjust speed (ms)
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        // Customize these values
+        primary: '#your-color',
+        secondary: '#your-color',
+        // ...
+      }
+    }
+  }
+}
 ```
 
----
-
-## 📝 Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm start` | Start development server |
-| `npm run build` | Create production build |
-| `npm test` | Run tests |
-| `npm run eject` | Eject from Create React App |
+**Dark mode specific colors**:
+- Use Tailwind's `dark:` prefix in components
+- Example: `bg-white dark:bg-gray-900`
 
 ---
 
-## 🤝 Contributing
+### Modifying Animations
 
-Contributions, issues, and feature requests are welcome!
+**MorphText Speed**:
+- File: `src/components/Home.jsx`
+- Adjust `setInterval` delay (default: 50ms)
 
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+**Scroll Animation Threshold**:
+- File: `src/components/About.jsx`
+- Modify `IntersectionObserver` threshold values
 
----
+**Page Transition Duration**:
+- Update Framer Motion `duration` props in components
+
+## 📈 Future Enhancements
+
+- [ ] Custom domain integration
+- [ ] Blog post search functionality
+- [ ] Project filtering by technology
+- [ ] Contact form integration
+- [ ] Performance analytics
+
+## 📧 Contact
+
+**Junhyeok Hwang**
+- Email: jun00883311@gmail.com
+- GitHub: [@JHwang831](https://github.com/JHwang831)
+- LinkedIn: [LinkedIn](www.linkedin.com/in/junhyeok-hwang-497413226)
+
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-## 👨‍💻 Author
-
-**Junhyeok Hwang**
-
-- 🎓 BSc Computer Science, Queen Mary University of London (2:1)
-- 💼 Currently serving as Social Service Personnel in South Korea
-- 🌐 Former Vice President, OKSE (Organisation of Korean Students in England)
-
-### Connect with me
-
-[![GitHub](https://img.shields.io/badge/GitHub-JHwang831-181717?style=flat&logo=github)](https://github.com/JHwang831)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Junhyeok%20Hwang-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/junhyeok-hwang-497413226/)
-[![Email](https://img.shields.io/badge/Email-jun00883311@gmail.com-EA4335?style=flat&logo=gmail&logoColor=white)](mailto:jun00883311@gmail.com)
-
----
-
-## 🙏 Acknowledgments
-
-- Design inspiration: [GitHub](https://github.com) & [Velog](https://velog.io)
-- Icons: [Lucide React](https://lucide.dev)
-- Hosting: [Vercel](https://vercel.com)
-
----
-
-<div align="center">
-
-### ⭐ Star this repo if you found it helpful!
-
-Made by Junhyeok Hwang
-
-© 2025 Junhyeok Hwang. All Rights Reserved.
-
-</div>
+Built by Junhyeok Hwang, 2025
