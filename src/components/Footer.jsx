@@ -94,7 +94,7 @@ const Footer = () => {
             : 'none',
           textShadow: isHomePage ? '0 2px 8px rgba(0, 0, 0, 0.5)' : 'none'
         }}>
-          © 2025 Junhyeok Hwang
+          © 2026 Junhyeok Hwang
         </p>
       </div>
     </footer>

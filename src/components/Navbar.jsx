@@ -374,7 +374,7 @@ const Navbar = () => {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '64px' }}>
             <a 
               ref={logoRef}
-              href="#"
+              href="/"
               onClick={handleLogoClick}
               onMouseMove={handleLogoMouseMove}
               onMouseEnter={handleLogoMouseEnter}
