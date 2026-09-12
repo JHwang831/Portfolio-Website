@@ -64,12 +64,12 @@ const content = {
   EN: {
     name: 'Junhyeok Hwang',
     subtitle: 'Developer & Designer',
-    status: 'Social Service Personnel (ROK)',
+    status: '로딩중... (Open to Work!)',
   },
   KR: {
     name: '황준혁',
     subtitle: '개발자 & 디자이너',
-    status: '사회복무요원',
+    status: 'Loading... (Open to Work!)',
   }
 };
 
