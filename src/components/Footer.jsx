@@ -17,9 +17,6 @@ const Footer = () => {
   // HOME 페이지인지 체크
   const isHomePage = location.pathname === '/';
   
-  // 다크모드 감지
-  const isDarkMode = c.bg === '#0d1117';
-  
   // Footer 스타일 결정
   const getFooterStyle = () => {
     if (isHomePage) {

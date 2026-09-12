@@ -359,41 +359,54 @@ const BlogPost = () => {
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
-            h1: ({node, ...props}) => (
-              <h1 style={{
-                fontSize: '36px',
-                fontWeight: 700,
-                color: c.textPrimary,
-                margin: '48px 0 24px 0',
-                lineHeight: 1.3
-              }} {...props} />
+            h1: ({ node, children, ...props }) => (
+              <h1
+                style={{
+                  fontSize: '36px',
+                  fontWeight: 700,
+                  color: c.textPrimary,
+                  margin: '48px 0 24px 0',
+                  lineHeight: 1.3
+                }}
+                {...props}
+              >
+                {children}
+              </h1>
             ),
-            h2: ({node, ...props}) => (
-              <h2 style={{
-                fontSize: '28px',
-                fontWeight: 600,
-                color: c.textPrimary,
-                margin: '40px 0 20px 0',
-                lineHeight: 1.4
-              }} {...props} />
+
+            h2: ({ node, children, ...props }) => (
+              <h2
+                style={{
+                  fontSize: '28px',
+                  fontWeight: 600,
+                  color: c.textPrimary,
+                  margin: '40px 0 20px 0',
+                  lineHeight: 1.4
+                }}
+                {...props}
+              >
+                {children}
+              </h2>
             ),
-            h3: ({node, ...props}) => (
-              <h3 style={{
-                fontSize: '22px',
-                fontWeight: 600,
-                color: c.textPrimary,
-                margin: '32px 0 16px 0',
-                lineHeight: 1.4
-              }} {...props} />
+
+            h3: ({ node, children, ...props }) => (
+              <h3
+                style={{
+                  fontSize: '22px',
+                  fontWeight: 600,
+                  color: c.textPrimary,
+                  margin: '32px 0 16px 0',
+                  lineHeight: 1.4
+                }}
+                {...props}
+              >
+                {children}
+              </h3>
             ),
-            p: ({node, ...props}) => (
-              <p style={{
-                margin: '0 0 24px 0',
-                lineHeight: 1.8
-              }} {...props} />
-            ),
-            img: ({node, ...props}) => (
+
+            img: ({ node, alt = '', ...props }) => (
               <img
+                alt={alt}
                 style={{
                   maxWidth: '100%',
                   height: 'auto',
@@ -404,7 +417,8 @@ const BlogPost = () => {
                 {...props}
               />
             ),
-            a: ({node, ...props}) => (
+
+            a: ({ node, children, ...props }) => (
               <a
                 style={{
                   color: c.accent,
@@ -413,7 +427,9 @@ const BlogPost = () => {
                   transition: 'all 0.2s ease'
                 }}
                 {...props}
-              />
+              >
+                {children}
+              </a>
             ),
             code: ({node, inline, ...props}) => {
               if (inline) {

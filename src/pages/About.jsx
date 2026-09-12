@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MapPin, GraduationCap, Briefcase, Code, Award, Globe, Mail, Github, Linkedin, Download, TrendingUp, Zap, Target } from 'lucide-react';
+import { MapPin, GraduationCap, Briefcase, Code, Award, Globe, Mail, Github, Linkedin, TrendingUp, Zap, Target } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import usePageBackground from '../hooks/usePageBackground';
 

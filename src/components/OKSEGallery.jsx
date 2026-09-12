@@ -121,9 +121,8 @@ const okseData = {
 };
 
 // Lightbox Component
-const Lightbox = ({ item, onClose, theme }) => {
+const Lightbox = ({ item, onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const c = theme;
 
   useEffect(() => {
     setIsVisible(true);
